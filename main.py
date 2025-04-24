@@ -9,14 +9,12 @@ import google.generativeai as genai
 from config import GEMINI_API_KEY, TAVILY_API_KEY
 from agents.agent_manager import AgentManager
 
-# Configure API keys
 load_dotenv()
 genai.configure(api_key=GEMINI_API_KEY)
 
 async def main():
     """Main entry point for the Deep Research System."""
     
-    # Parse command line arguments
     parser = argparse.ArgumentParser(description="Deep Research AI Agentic System")
     parser.add_argument("--query", "-q", type=str, help="The research query to process")
     parser.add_argument("--style", "-s", type=str, default="academic", 
@@ -28,7 +26,7 @@ async def main():
     
     args = parser.parse_args()
     
-    # Check API keys
+    
     if not TAVILY_API_KEY:
         print("Error: TAVILY_API_KEY not found in environment variables or .env file")
         return
@@ -37,7 +35,7 @@ async def main():
         print("Error: GEMINI_API_KEY not found in environment variables or .env file")
         return
     
-    # Get query from arguments or prompt user
+    
     query = args.query
     if not query:
         query = input("Enter your research query: ")
@@ -51,12 +49,12 @@ async def main():
     print(f"Starting research on: {query}")
     print(f"Using {style} answer style")
     
-    # Process with LangGraph workflow if requested
+    
     if args.workflow:
         print("Using LangGraph workflow for research process...")
         final_response = await manager.run_langgraph_workflow(query, style)
     else:
-        # Process with multiple agents if requested
+        
         if num_agents > 1:
             print(f"Conducting multi-agent research with {num_agents} agents...")
             research_results = await manager.multi_agent_research(query, num_agents)
@@ -65,11 +63,11 @@ async def main():
             final_response = await manager.answer_agent.draft_answer(query, research_results)
             final_response = await manager.answer_agent.refine_answer(final_response, style)
         else:
-            # Process with standard pipeline
+            
             print("Processing query with standard pipeline...")
             final_response = await manager.process_query(query, style)
     
-    # Display the answer
+    
     print("\n" + "="*80)
     print(f"ANSWER TO: {query}")
     print("="*80 + "\n")
@@ -77,7 +75,7 @@ async def main():
     answer_text = final_response.get("answer", final_response.get("refined_answer", ""))
     print(answer_text)
     
-    # Print sources
+    
     print("\n" + "="*80)
     print("SOURCES:")
     print("="*80)

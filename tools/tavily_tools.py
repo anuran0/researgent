@@ -30,7 +30,7 @@ class TavilySearchTool:
                 include_raw_content=True
             )
             
-            # Extract and structure the results
+            
             results = {
                 "query": query,
                 "answer": response.get("answer", ""),
@@ -61,18 +61,18 @@ class TavilySearchTool:
         """
         all_results = []
         
-        # Search the main query
+        
         main_results = await self.search(query, search_depth=2)
         all_results.append(main_results)
         
-        # If subtopics provided, search each one
+        
         if subtopics:
             for subtopic in subtopics:
                 sub_query = f"{query} {subtopic}"
                 sub_results = await self.search(sub_query)
                 all_results.append(sub_results)
         
-        # Combine results
+        
         combined_sources = []
         combined_answer = main_results.get("answer", "")
         

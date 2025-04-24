@@ -19,7 +19,7 @@ def extract_key_info(text: str, max_length: int = 1000) -> str:
     if len(text) <= max_length:
         return text
     
-    # Simple extraction - in production, use more sophisticated methods
+    
     return text[:max_length] + "..."
 
 def merge_research_results(results: List[Dict[str, Any]]) -> Dict[str, Any]:
@@ -33,20 +33,20 @@ def merge_research_results(results: List[Dict[str, Any]]) -> Dict[str, Any]:
     all_texts = []
     
     for result in results:
-        # Add unique sources
+        
         for source in result.get("sources", []):
             if source not in merged["sources"]:
                 merged["sources"].append(source)
         
-        # Collect all extracted text
+        
         if "extracted_information" in result:
             all_texts.append(result["extracted_information"])
         
-        # Add key findings
+        
         if "key_findings" in result:
             merged["key_findings"].extend(result["key_findings"])
     
-    # Combine extracted information
+    
     merged["extracted_information"] = "\n\n".join(all_texts)
     
     return merged

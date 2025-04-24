@@ -149,7 +149,6 @@ class AgentManager:
         final_answer = final_state.get("final_answer", {})
         sources = final_state.get("draft_answer", {}).get("sources", [])
 
-        # Combine final answer with sources
         final_answer["sources"] = sources
         return final_answer
 

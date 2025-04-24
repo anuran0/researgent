@@ -6,7 +6,6 @@ from config import GEMINI_API_KEY, RESEARCH_AGENT_MODEL
 from tools.tavily_tools import TavilySearchTool
 from utils.helpers import extract_key_info, format_sources
 
-# Configure Gemini
 genai.configure(api_key=GEMINI_API_KEY)
 
 class ResearchAgent:

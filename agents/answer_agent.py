@@ -5,7 +5,6 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from config import GEMINI_API_KEY, ANSWER_AGENT_MODEL
 from utils.helpers import format_sources
 
-# Configure Gemini
 genai.configure(api_key=GEMINI_API_KEY)
 
 class AnswerAgent:
